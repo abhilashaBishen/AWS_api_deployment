@@ -3,7 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
-	res.send("Hello from my first AWS deployed Node.js app!");
+	res.send({ message: "Hello from my first AWS deployed Node.js app!" });
 });
 
 app.listen(PORT, () => {
