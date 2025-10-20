@@ -1,12 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const PORT = 4500;
+const PORT = process.env.PORT || 4500;
 
 mongoose
-	.connect(
-		"mongodb+srv://abhilashasingh1391_db_user:JUr3yRRzWWEWL7KF@cluster0.gvvveeg.mongodb.net/UsersInformation?retryWrites=true&w=majority&appName=Cluster0"
-	)
+	.connect(process.env.MONGO_URI)
 	.then(() => console.log("✅ MongoDB connected"))
 	.catch((err) => console.log("❌ MongoDB connection error:", err));
 
@@ -27,11 +26,12 @@ app.get("/about", (req, res) => {
 
 app.post("/users", async (req, res) => {
 	try {
-		const user = new User({ name: "Abhilasha", email: "a@gmail.com" });
-		await user.save(); // saves to MongoDB
+		const { name, email } = req.body; // get name/email from request
+		const user = new User({ name, email });
+		await user.save();
 		res.send("User saved!");
 	} catch (err) {
-		res.send(err);
+		res.status(400).send(err);
 	}
 });
 
