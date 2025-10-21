@@ -24,9 +24,13 @@ app.get("/about", (req, res) => {
 	res.send("This is my first Express.js backend API!");
 });
 
+app.get("/hello", (req, res) => {
+	res.send("say Hellow");
+});
+
 app.post("/users", async (req, res) => {
 	try {
-		const { name, email } = req.body; // get name/email from request
+		const { name, email } = req.body;
 		const user = new User({ name, email });
 		await user.save();
 		res.send("User saved!");
